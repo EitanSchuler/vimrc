@@ -1,0 +1,40 @@
+"case insensitive search (unless CamelCase userd)
+set ignorecase
+set smartcase
+
+"set tab to 2 spaces
+set shiftwidth=2
+set softtabstop=2
+set expandtab
+
+set wildmenu
+set showcmd
+set incsearch
+set wildchar=<Tab> wildmenu wildmode=full
+
+
+" open perl modules code with F9
+" nnoremap <F9> :call LoadPerlModule()<CR>
+function! LoadPerlModule()
+  execute 'e `perldoc -l ' . expand("<cWORD>") . '`'
+endfunction
+command WQ wq
+command Wq wq
+command W w
+command Q q
+
+set laststatus=2
+
+" show current function name http://www.vim.org/tips/tip.php?tip_id=1267
+fun! ShowFuncName()
+  let lnum = line(".")
+  let col = col(".")
+  echohl ModeMsg
+  echo getline(search("^[^ \t#/]\\{2}.*[^:]\s*$", 'bW'))
+  echohl None
+  call search("\\%" . lnum . "l" . "\\%" . col . "c")
+endfun
+map f :call ShowFuncName() <CR>
+
+set encoding=latin1
+set fileencoding=latin1
